@@ -1,0 +1,77 @@
+/*
+Bob and Alice like to play the game tower of Hanoi. One day Alice challenges Bob to build the tallest tower from a set of disks of different height and radius. The tower of Hanoi can be built by stacking disks on top of each other. In order to put disk A on top of disk B, the radius and height of A must be strictly smaller than those of B. Help Bob to win the challenge.
+
+Input:
+First line of input contains number of test cases T.
+First line of each test case contains value of N, the number of disks. The next N lines contains two positive integer number Ri and Hi corresponding to the radius and height of ith Disk respectively.
+
+Output:
+For each test case print the maximum height of the tower possible.
+
+Constraints:
+1<=T<=10
+1<=N<=200
+1<=Ri, Hi<=10^9
+*/
+
+#include<stdio.h>
+struct hr
+{
+    long long int rr,hh;
+};
+void function(int n,struct hr *k)
+{
+    int i=0,j;
+    for(i=1;i<n;i++)
+    {
+        j=i-1;
+        struct hr key=k[i];
+        while(j>=0 && k[j].hh>key.hh)
+        {
+            k[j+1]=k[j];
+            j--;
+        }
+        k[j+1]=key;
+    }
+    printf("\nSORTED VALUES\n");
+    for(i=0;i<n;i++)
+    {
+        printf("%d ,",k[i].rr);
+    }
+    printf("\nSORTED VALUES");
+
+    long long int hei=0,l=n-1;
+    hei+=k[l].hh;
+    for(i=n-2;i>=0;i--)
+    {
+
+        if(k[l].rr > k[i].rr)
+        {
+            printf("\n new element%ld",k[i].hh);
+            hei+=k[i].hh;
+            l=i;
+        }
+    }
+    printf("%ld",hei);
+}
+
+int main()
+{
+     int t,n,i;
+    scanf("%d",&t);
+    while(t--)
+    {
+        scanf("%ld",&n);
+        struct hr hp[n],*k;
+        long long int r,h;
+        for(i=0;i<n;i++)
+        {
+            scanf("%ld",&r);
+            scanf("%ld",&h);
+            hp[i].rr=r;
+            hp[i].hh=h;
+        }
+        k=&hp;
+        function(n,k);
+    }
+}
